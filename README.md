@@ -1,5 +1,3 @@
----
-
 # `jsrun` Quick Start Guide
 
 This tutorial is intended to give a basic overview of the `jsrun` job launcher. It is **not** intended to cover all aspects of `jsrun`. For a more complete overview, please see the [Summit User Guide - Job Launcher (jsrun)](https://www.olcf.ornl.gov/for-users/system-user-guides/summit/summit-user-guide/#job-launcher-(jsrun)). 
