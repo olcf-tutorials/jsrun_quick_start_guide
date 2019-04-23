@@ -159,7 +159,10 @@ From the output, we can see that each MPI rank now has 2 OpenMP threads as inten
 | `--bind`    | `-b`         | Binding of tasks within a resource set. Can be none, rs, or packed:#.|  
 
 <br>
+
 `--bind` allows you to set the number of physical cores available to an MPI task (to do things like spawn OpenMP threads on). By default, it is set to `-bpacked:1`, which means each MPI rank only has 1 physical core available to it. So when we spawned our 2 OpenMP threads from each MPI rank, they only had 1 physical core to run on (although 4 hardware threads). In some cases, this is undesired behavior that can slow down application performance.
+
+<br>
 
 If we want to run each OpenMP thread on its own physical core, we would need to set the `#` in `-bpacked:#` to the number of OpenMP threads we desire. So for our example, we would want `-bpacked:2`. Let's try that:
 
@@ -263,6 +266,7 @@ While this is not intended to be a comprehensive tutorial on `jsrun`, hopefully 
 | `--launch_distribution` | `-d`         | How tasks are distributed among resource sets. Can be cyclic, packed, or plane:# |
 
 <br>
+
 **<font color="red">NOTE:</font>** We didn't actually cover the `--rs_per_host` flag because we only used a single node for our examples, but it is as straight-forward as the description implies.
 
 These flags will give most users the ability to create the resource layouts they desire but, as mentioned above, this is only a sub-set of the functionality available with `jsrun`. If you would like more information about using `jsrun`, please see the following resources:
