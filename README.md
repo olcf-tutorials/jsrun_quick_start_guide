@@ -233,6 +233,7 @@ From the output, it appears we've created our 2 resource sets, but consecutive M
 * `-dplane:#` can be thought of as a combination of `-dcylic` and `-dpacked`, where `#` represents the number of ranks to assign to the first resource set before moving on to fill the next resource set, etc.
 
 <br>
+
 For our example, we require `-dpacked`:
 
 ```c
