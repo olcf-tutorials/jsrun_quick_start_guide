@@ -208,15 +208,18 @@ $ export OMP_NUM_THREADS=1
 $ jsrun -n2 -c21 -g3 -a3 -bpacked:1 ./hello_jsrun | sort
 
 ---------- MPI Ranks: 6, OpenMP Threads: 1, GPUs per Resource Set: 3 ----------
-MPI Rank 000, OMP_thread 00 on HWThread 002 of Node h49n16 - RT_GPU_id 0 1 2 : GPU_id 0 1 2 
-MPI Rank 001, OMP_thread 00 on HWThread 089 of Node h49n16 - RT_GPU_id 0 1 2 : GPU_id 3 4 5 
-MPI Rank 002, OMP_thread 00 on HWThread 006 of Node h49n16 - RT_GPU_id 0 1 2 : GPU_id 0 1 2 
-MPI Rank 003, OMP_thread 00 on HWThread 093 of Node h49n16 - RT_GPU_id 0 1 2 : GPU_id 3 4 5 
-MPI Rank 004, OMP_thread 00 on HWThread 010 of Node h49n16 - RT_GPU_id 0 1 2 : GPU_id 0 1 2 
+MPI Rank 000, OMP_thread 00 on HWThread 000 of Node h49n16 - RT_GPU_id 0 1 2 : GPU_id 0 1 2
+MPI Rank 001, OMP_thread 00 on HWThread 006 of Node h49n16 - RT_GPU_id 0 1 2 : GPU_id 0 1 2
+MPI Rank 002, OMP_thread 00 on HWThread 010 of Node h49n16 - RT_GPU_id 0 1 2 : GPU_id 0 1 2
+MPI Rank 003, OMP_thread 00 on HWThread 089 of Node h49n16 - RT_GPU_id 0 1 2 : GPU_id 3 4 5
+MPI Rank 004, OMP_thread 00 on HWThread 094 of Node h49n16 - RT_GPU_id 0 1 2 : GPU_id 3 4 5
 MPI Rank 005, OMP_thread 00 on HWThread 097 of Node h49n16 - RT_GPU_id 0 1 2 : GPU_id 3 4 5
 ```
 
-From the output, it appears we've created our 2 resource sets, but consecutive MPI ranks are jumping back and forth between resource sets (sockets in this case). For example, MPI rank 0 is on hardware thread 002 and has access to GPUs 0, 1, and 2 (i.e., socket 0), MPI rank 1 is on hardware thread 089 and has access to GPUs 3, 4, and 5 (i.e., socket 1), MPI rank 2 is on hardware thread 006 and has access to GPUs 0, 1, and 2 (i.e., socket 0), etc. This behavior can be changed with the `-d` flag:
+Success! MPI ranks 0, 1, and 2 are on hardware threads 000, 006, and 010 and have access to GPUs 0, 1, and 2 (i.e., socket 0), while MPI ranks 3, 4, and 5 are on hardware threads 089, 094, and 097 and have access to GPUs 3, 4, and 5 (i.e., socket 1).
+
+<br>
+We could also change the order that the MPI ranks are distributed among resource sets with the following flag:
 
 <br>
 
@@ -226,29 +229,11 @@ From the output, it appears we've created our 2 resource sets, but consecutive M
 
 <br>
 
-* `-dcyclic` is used to assign MPI tasks to resource sets in a round-robin fashion. This is the default behavior, which is why we found the results above. 
+* `-dcyclic` is used to assign MPI tasks to resource sets in a round-robin fashion. 
 
-* `-dpacked` is used to assign MPI tasks to resource sets such that the first resource set is filled, then the next, etc.
+* `-dpacked` is used to assign MPI tasks to resource sets such that the first resource set is filled, then the next, etc. This is the default behavior on Summit.
 
 * `-dplane:#` can be thought of as a combination of `-dcylic` and `-dpacked`, where `#` represents the number of ranks to assign to the first resource set before moving on to fill the next resource set, etc.
-
-<br>
-
-For our example, we require `-dpacked`:
-
-```c
-$ jsrun -n2 -c21 -g3 -a3 -bpacked:1 -dpacked ./hello_jsrun | sort
-
----------- MPI Ranks: 6, OpenMP Threads: 1, GPUs per Resource Set: 3 ----------
-MPI Rank 000, OMP_thread 00 on HWThread 000 of Node h49n16 - RT_GPU_id 0 1 2 : GPU_id 0 1 2 
-MPI Rank 001, OMP_thread 00 on HWThread 006 of Node h49n16 - RT_GPU_id 0 1 2 : GPU_id 0 1 2 
-MPI Rank 002, OMP_thread 00 on HWThread 010 of Node h49n16 - RT_GPU_id 0 1 2 : GPU_id 0 1 2 
-MPI Rank 003, OMP_thread 00 on HWThread 089 of Node h49n16 - RT_GPU_id 0 1 2 : GPU_id 3 4 5 
-MPI Rank 004, OMP_thread 00 on HWThread 094 of Node h49n16 - RT_GPU_id 0 1 2 : GPU_id 3 4 5 
-MPI Rank 005, OMP_thread 00 on HWThread 097 of Node h49n16 - RT_GPU_id 0 1 2 : GPU_id 3 4 5
-``` 
-
-Success! Using this flag gives us the desired results. Now MPI ranks 0, 1, and 2 are on hardware threads 000, 006, and 010 and have access to GPUs 0, 1, and 2 (i.e., socket 0), while MPI ranks 3, 4, and 5 are on hardware threads 089, 094, and 097 and have access to GPUs 3, 4, and 5.
 
 ## Summary
 
