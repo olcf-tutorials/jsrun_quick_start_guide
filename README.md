@@ -1,6 +1,6 @@
 # `jsrun` Quick Start Guide
 
-This tutorial is intended to give a basic overview of the `jsrun` job launcher. It is **not** intended to cover all aspects of `jsrun`. For a more complete overview, please see the [Summit User Guide - Job Launcher (jsrun)](https://www.olcf.ornl.gov/for-users/system-user-guides/summit/summit-user-guide/#job-launcher-(jsrun)). 
+This tutorial is intended to give a basic overview of the `jsrun` job launcher. It is **not** intended to cover all aspects of `jsrun`. For a more complete overview, please see the [Summit User Guide - Job Launcher (jsrun)](https://docs.olcf.ornl.gov/systems/summit_user_guide.html#job-launcher-jsrun). 
 
 ---
 
@@ -257,7 +257,7 @@ While this is not intended to be a comprehensive tutorial on `jsrun`, hopefully 
 
 These flags will give most users the ability to create the resource layouts they desire but, as mentioned above, this is only a sub-set of the functionality available with `jsrun`. If you would like more information about using `jsrun`, please see the following resources:
 
-* [Summit User Guide - Job Launcher (jsrun)](https://www.olcf.ornl.gov/for-users/system-user-guides/summit/summit-user-guide/#job-launcher-(jsrun))
+* [Summit User Guide - Job Launcher (jsrun)](https://docs.olcf.ornl.gov/systems/summit_user_guide.html#job-launcher-jsrun)
 * The `jsrun` man page (on Summit)
 
 ### Available Tools
