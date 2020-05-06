@@ -264,7 +264,7 @@ These flags will give most users the ability to create the resource layouts they
 
 [Hello_jsrun](https://code.ornl.gov/t4p/Hello_jsrun) - A simple "Hello, World!" type program that can be used to test the layout of resources on Summit, Ascent, and SummitDev.
 
-[jsrunVisualizer](https://jsrunvisualizer.olcf.ornl.gov/) - A web-based tool that mimics `jsrun` behavior locally in your browser. This is also the tool used to create the node images in this guide! 
+[job-step-viewer](https://jobstepviewer.olcf.ornl.gov/) - A graphical tools to learn about running `jsrun` on Summit.
 
 
 
